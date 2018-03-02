@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d --- [%X{loginUserId}/%X{req.remoteAddr}/%X{traceId} - %X{entranceMethod} - %X{req.requestURIWithQueryString}] %-5p %c - %m%n"/>
+      <!-- <ThresholdFilter level="TRACE" onMatch="ACCEPT" onMismatch="DENY"/> -->
+    </Console>
+    <RollingFile name="RollingAllFile" fileName="/data2/log/society/all.log" filePattern="/data2/log/society/all.log.%d{yyyy-MM-dd-HH}">
+        <PatternLayout pattern="%d --- [%X{loginUserId}/%X{req.remoteAddr}/%X{traceId} - %X{entranceMethod} - %X{req.requestURIWithQueryString}] %-5p %c - %m%n"/>
+        <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            <!-- <SizeBasedTriggeringPolicy size="100 MB"/> -->
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+    <RollingFile name="RollingWarnFile" fileName="/data2/log/society/warn.log" filePattern="/data2/log/society/warn.log.%d{yyyy-MM-dd}">
+        <PatternLayout pattern="%d --- [%X{loginUserId}/%X{req.remoteAddr}/%X{traceId} - %X{entranceMethod} - %X{req.requestURIWithQueryString}] %-5p %c - %m%n"/>
+        <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            <!-- <SizeBasedTriggeringPolicy size="100 MB"/> -->
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+    <RollingFile name="RollingErrorFile" fileName="/data2/log/society/error.log" filePattern="/data2/log/society/error.log.%d{yyyy-MM-dd}">
+        <PatternLayout pattern="%d --- [%X{loginUserId}/%X{req.remoteAddr}/%X{traceId} - %X{entranceMethod} - %X{req.requestURIWithQueryString}] %-5p %c - %m%n"/>
+        <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+        <Policies>
+            <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            <!-- <SizeBasedTriggeringPolicy size="100 MB"/> -->
+        </Policies>
+        <DefaultRolloverStrategy max="20"/>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="INFO">
+        <AppenderRef ref="Console"/>
+        <AppenderRef ref="RollingAllFile"/>
+        <AppenderRef ref="RollingWarnFile"/>
+        <AppenderRef ref="RollingErrorFile"/>
+    </Root>
+    <!-- <logger name="com.society" level="INFO">
+        <AppenderRef ref="RollingAllFile"/>
+        <AppenderRef ref="RollingWarnFile"/>
+        <AppenderRef ref="RollingErrorFile"/>
+    </logger> -->
+  </Loggers>
+</Configuration>

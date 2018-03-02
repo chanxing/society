@@ -1,0 +1,9 @@
+.settings*
+**.settings*
+**target**
+.project
+.classpath
+node_modules
+**.classpath
+/bin/
+/.DS_Store

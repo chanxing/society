@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    <properties>
+        <java.version>1.7</java.version>
+        <self.version>0.0.1-SNAPSHOT</self.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+	<groupId>com.society</groupId>
+	<artifactId>society</artifactId>
+	<version>${self.version}</version>
+    <!-- <version>0.0.1-SNAPSHOT</version> -->
+	<packaging>pom</packaging>
+
+	<!-- Inherit defaults from Spring Boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
+	</parent>
+
+    <dependencyManagement>
+    	<dependencies>
+    		<dependency>
+    			<groupId>com.society</groupId>
+    			<artifactId>society-util</artifactId>
+    			<version>${self.version}</version>
+    		</dependency>
+            <dependency>
+                <groupId>com.society</groupId>
+                <artifactId>society-model</artifactId>
+                <version>${self.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.society</groupId>
+                <artifactId>society-dao</artifactId>
+                <version>${self.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.society</groupId>
+                <artifactId>society-service</artifactId>
+                <version>${self.version}</version>
+            </dependency>
+    		<dependency>
+    			<groupId>com.society</groupId>
+    			<artifactId>society-web</artifactId>
+    			<version>${self.version}</version>
+    		</dependency>
+            <!-- apache-commons BEGIN -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.8.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.1</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.1</version>
+            </dependency>
+    	</dependencies>
+    </dependencyManagement>
+
+    <!-- Package as an executable jar -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                        <!-- 编译跳过单元测试 -->
+                        <skip>true</skip>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+    	<module>society-util</module>
+        <module>society-model</module>
+        <module>society-dao</module>
+        <module>society-service</module>
+	    <module>society-web</module>
+  	</modules>
+</project>
