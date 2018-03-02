@@ -1,3 +1,7 @@
+CREATE DATABASE `society` DEFAULT CHARACTER SET = `utf8`;
+
+USE `society`;
+
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `account` varchar(200) NOT NULL DEFAULT '' COMMENT '帐号',
