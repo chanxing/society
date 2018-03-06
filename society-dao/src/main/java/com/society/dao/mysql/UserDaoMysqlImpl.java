@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -25,6 +28,8 @@ public class UserDaoMysqlImpl implements UserDao {
 	// StringUtil.humpToUnderline(UserDaoMysqlImpl.class.getSimpleName());
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private NamedParameterJdbcTemplate nameJdbcTemplate;
 
 	@Override
 	public Integer add(final String account, final String username, final String encryptPassword, final String salt) {
@@ -89,6 +94,18 @@ public class UserDaoMysqlImpl implements UserDao {
 	public boolean updatePassword(int userId, String encryptPassword, String salt) {
 		String sql = "UPDATE user SET encrypt_password=?,salt=? WHERE id=?";
 		return jdbcTemplate.update(sql, encryptPassword, salt, userId) > 0;
+	}
+
+	@Override
+	public int countByClubId(Integer clubId) {
+		Map<String, Object> args = new HashMap<>();
+		String sql = " SELECT COUNT(1) FROM user WHERE del=0 ";
+		if (null != clubId) {
+			args.put("clubId", clubId);
+			String userClubMapSql = " SELECT user_id FROM user_club_map WHERE club_id=:clubId ";
+			sql += " AND id IN (" + userClubMapSql + ")";
+		}
+		return nameJdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
 
 }

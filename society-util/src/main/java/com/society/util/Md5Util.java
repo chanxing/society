@@ -65,7 +65,7 @@ public class Md5Util {
 
 	public static String md5(InputStream data) throws IOException {
 		byte[] md = digest(getMd5Digest(), data);
-		return new String(md);
+		return new String(encodeHex(md, DIGITS_LOWER));
 	}
 
 	private static byte[] digest(MessageDigest digest, InputStream data) throws IOException {

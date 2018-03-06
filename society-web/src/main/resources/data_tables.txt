@@ -40,3 +40,93 @@ CREATE TABLE `verification_code` (
   `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='验证码';
+
+
+
+/*********************************2018-03-06****************************************************/
+ALTER TABLE `user` ADD `role` int(4) NOT NULL DEFAULT '0' COMMENT '角色：1.管理员';
+
+CREATE TABLE `club` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '社团名称',
+  `logo` varchar(500) DEFAULT NULL COMMENT 'logo',
+  `introduction` text COMMENT '介绍',
+  `announcement` text COMMENT '公告',
+  `type` int(4) NOT NULL DEFAULT '0' COMMENT '社团类型',
+  `level` int(4) NOT NULL DEFAULT '0' COMMENT '社团等级',
+  `creater` int(11) NOT NULL DEFAULT '0' COMMENT '创建人',
+  `section` varchar(10) DEFAULT NULL COMMENT '创建日期',
+  `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '创建时间',
+  `lmodify` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '修改时间',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `club_activity` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `club_id` int(11) NOT NULL DEFAULT '0',
+  `type` int(4) NOT NULL DEFAULT '0',
+  `title` varchar(200) DEFAULT NULL,
+  `start_date` varchar(16) DEFAULT NULL,
+  `start_date_int` bigint(12) NOT NULL DEFAULT '0',
+  `end_date` varchar(16) DEFAULT NULL,
+  `end_date_int` bigint(12) NOT NULL DEFAULT '0',
+  `place` varchar(200) DEFAULT NULL,
+  `poster` varchar(500) DEFAULT NULL,
+  `description` text,
+  `operator` int(11) NOT NULL DEFAULT '0',
+  `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00',
+  `lmodify` datetime NOT NULL DEFAULT '1970-01-01 08:00:00',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `club_apply` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `club_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团ID',
+  `status` int(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '创建日期',
+  `lmodify` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '修改日期',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `club_department` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '部门名称',
+  `club_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团ID',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `club_photo` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `club_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团ID',
+  `url` varchar(500) DEFAULT NULL,
+  `operator` int(11) NOT NULL DEFAULT '0' COMMENT '操作人',
+  `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `club_position` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT '职位名称',
+  `club_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团ID',
+  `del` int(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_club_map` (
+  `user_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `club_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团ID',
+  `department_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团部门ID',
+  `position_id` int(11) NOT NULL DEFAULT '0' COMMENT '社团职位ID',
+  `premit_id` int(4) NOT NULL DEFAULT '0' COMMENT '社团权限ID',
+  `posttime` datetime NOT NULL DEFAULT '1970-01-01 08:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`user_id`,`club_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -70,4 +70,6 @@ public interface UserDao {
 			String qq, String wechat, String hobbies, String selIntroduction, String image);
 
 	boolean updatePassword(int userId, String encryptPassword, String salt);
+
+	int countByClubId(Integer clubId);
 }

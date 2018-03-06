@@ -2,6 +2,8 @@ package com.society.model;
 
 import java.util.Date;
 
+import com.society.constant.RoleTypeEnum;
+
 public class User {
 
 	/** ID **/
@@ -42,17 +44,11 @@ public class User {
 	private String selIntroduction;
 	/** 头像 **/
 	private String image;
+	/** 角色 {@link RoleTypeEnum} **/
+	private int role;
 	private Date posttime;
 	private Date lmodify;
 	private int del;
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", account=" + account + ", encryptPassword=" + encryptPassword + ", salt=" + salt + ", username=" + username + ", actualName=" + actualName + ", gender=" + gender
-				+ ", birthday=" + birthday + ", nativePlace=" + nativePlace + ", department=" + department + ", profession=" + profession + ", grade=" + grade + ", phone=" + phone + ", startYear="
-				+ startYear + ", qq=" + qq + ", wechat=" + wechat + ", hobbies=" + hobbies + ", selIntroduction=" + selIntroduction + ", image=" + image + ", posttime=" + posttime + ", lmodify="
-				+ lmodify + ", del=" + del + "]";
-	}
 
 	public int getId() {
 		return id;
@@ -206,6 +202,14 @@ public class User {
 		this.image = image;
 	}
 
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 	public Date getPosttime() {
 		return posttime;
 	}
@@ -228,6 +232,14 @@ public class User {
 
 	public void setDel(int del) {
 		this.del = del;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", account=" + account + ", encryptPassword=" + encryptPassword + ", salt=" + salt + ", username=" + username + ", actualName=" + actualName + ", gender=" + gender
+				+ ", birthday=" + birthday + ", nativePlace=" + nativePlace + ", department=" + department + ", profession=" + profession + ", grade=" + grade + ", phone=" + phone + ", startYear="
+				+ startYear + ", qq=" + qq + ", wechat=" + wechat + ", hobbies=" + hobbies + ", selIntroduction=" + selIntroduction + ", image=" + image + ", role=" + role + ", posttime=" + posttime
+				+ ", lmodify=" + lmodify + ", del=" + del + "]";
 	}
 
 	public static class UserInfo {

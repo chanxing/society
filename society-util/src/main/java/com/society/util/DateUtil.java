@@ -17,13 +17,13 @@ public class DateUtil {
 
 	public final static String TIME_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss";
 
-	public final static String MINITE_FORMAT_STRING = "yyyyMMddHHmm";
+	public final static String yyyyMMddHHmm = "yyyyMMddHHmm";
 
-	public final static String DATE_FORMAT_STRING = "yyyy-MM-dd";
+	public final static String yyyy1MM1dd = "yyyy-MM-dd";
 
-	public final static String DATE_FORMAT_STRING_2 = "yyyyMMdd";
+	public final static String yyyyMMdd = "yyyyMMdd";
 
-	public final static String MINITE_FORMAT_STRING_2 = "yyyy-MM-dd HH:mm";
+	public final static String yyyy1MM1dd2HH3mm = "yyyy-MM-dd HH:mm";
 
 	/**
 	 * 日期字符串转换为整型
@@ -168,7 +168,7 @@ public class DateUtil {
 	}
 
 	public static String date2StringDate(Date date) {
-		return date2String(date, DATE_FORMAT_STRING);
+		return date2String(date, yyyy1MM1dd);
 	}
 
 	public static Date getDayBefore(Date date, int day) {
@@ -180,7 +180,7 @@ public class DateUtil {
 	}
 
 	public static String getDayBeforeStr(int day) {
-		return getDayBeforeStr(day, DATE_FORMAT_STRING);
+		return getDayBeforeStr(day, yyyy1MM1dd);
 	}
 
 	public static String getDayBeforeStr(int day, String format) {
@@ -208,7 +208,7 @@ public class DateUtil {
 	}
 
 	public static String getWeekBeforeStr() {
-		return date2String(getWeekBefore(new Date()), DATE_FORMAT_STRING);
+		return date2String(getWeekBefore(new Date()), yyyy1MM1dd);
 	}
 
 	public static String getWeekBeforeStr(String format) {
@@ -216,11 +216,11 @@ public class DateUtil {
 	}
 
 	public static String getTodayDayStr() {
-		return getTodayDayStr(DATE_FORMAT_STRING);
+		return getTodayDayStr(yyyy1MM1dd);
 	}
 
 	public static String getTodayDayStr2() {
-		return getTodayDayStr(DATE_FORMAT_STRING_2);
+		return getTodayDayStr(yyyyMMdd);
 	}
 
 	public static String getTodayDayStr(String format) {
@@ -233,7 +233,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getTodayMinStr() {
-		return date2String(new Date(), MINITE_FORMAT_STRING_2);
+		return date2String(new Date(), yyyy1MM1dd2HH3mm);
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getMinuteStr() {
-		return date2String(new Date(), MINITE_FORMAT_STRING);
+		return date2String(new Date(), yyyyMMddHHmm);
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static String getMinuteStr(Date date) {
-		return date2String(date, MINITE_FORMAT_STRING);
+		return date2String(date, yyyyMMddHHmm);
 	}
 
 	/**
@@ -265,7 +265,7 @@ public class DateUtil {
 	 */
 	public static String getBeforeMinuteStr(int minute) {
 		long time = (new Date()).getTime() - (60 * 1000 * minute);
-		return date2String(new Date(time), MINITE_FORMAT_STRING);
+		return date2String(new Date(time), yyyyMMddHHmm);
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class DateUtil {
 
 	public static String getAfterMinuteStr(Date date, int minute) {
 		long time = date.getTime() + (60 * 1000 * minute);
-		return date2String(new Date(time), MINITE_FORMAT_STRING);
+		return date2String(new Date(time), yyyyMMddHHmm);
 	}
 
 	/**
@@ -293,15 +293,15 @@ public class DateUtil {
 	 */
 	public static String getBeforeMinuteStr(Date date, int minute) {
 		long time = date.getTime() - (60 * 1000 * minute);
-		return date2String(new Date(time), MINITE_FORMAT_STRING);
+		return date2String(new Date(time), yyyyMMddHHmm);
 	}
 
 	public static String getTomorrowDayStr() {
-		return date2String(getTomorrowDay(new Date()), DATE_FORMAT_STRING);
+		return date2String(getTomorrowDay(new Date()), yyyy1MM1dd);
 	}
 
 	public static String getTomorrowDayStr2() {
-		return date2String(getTomorrowDay(new Date()), DATE_FORMAT_STRING_2);
+		return date2String(getTomorrowDay(new Date()), yyyyMMdd);
 	}
 
 	private static Date getTomorrowDay(Date date) {
@@ -363,8 +363,8 @@ public class DateUtil {
 	}
 
 	public static int diffDay(String startDate, String endDate) {
-		Date d1 = str2Date(startDate, DATE_FORMAT_STRING);
-		Date d2 = str2Date(endDate, DATE_FORMAT_STRING);
+		Date d1 = str2Date(startDate, yyyy1MM1dd);
+		Date d2 = str2Date(endDate, yyyy1MM1dd);
 		long t1 = d1.getTime();
 		long t2 = d2.getTime();
 		long diffMill;
@@ -391,7 +391,7 @@ public class DateUtil {
 	}
 
 	public static int diffToday(String date) {
-		Date d1 = str2Date(date, DATE_FORMAT_STRING);
+		Date d1 = str2Date(date, yyyy1MM1dd);
 		long t1 = d1.getTime();
 		long t2 = (new Date()).getTime();
 		long diffMill;
@@ -634,7 +634,7 @@ public class DateUtil {
 	 * @return
 	 */
 	public static boolean exToday(String dateStr) {
-		int today = Integer.valueOf(getTodayDayStr(DATE_FORMAT_STRING_2));
+		int today = Integer.valueOf(getTodayDayStr(yyyyMMdd));
 		int date = Integer.valueOf(dateStr);
 		if (today - date < 0) {
 			return true;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>学生社团管理系统</title>
+  </head>
+  <body>
+    <!-- <form action="http://localhost:8088/uploadImage.do" accept-charset="UTF-8 - Unicode" method="Post">
+      <input type="file" value="img" />
+      <input type="submit" value="Submit" />
+    </form> -->
+    <!-- <form enctype="multipart/form-data" method="post" action="/uploadImage.do">
+		<input type="file" name="uploadFile"/>
+		<input type="submit" value="图片" />
+	</form> -->
+	<form enctype="multipart/form-data" method="post" action="/deal/clubPhoto/uploadPhoto.do">
+		 <input type="file" name="uploadFile"/>
+		<!-- <input type="text" name=clubId/> -->
+		<input type="submit" name="clubId" value="1" />
+	</form>
+  </body>
+</html>

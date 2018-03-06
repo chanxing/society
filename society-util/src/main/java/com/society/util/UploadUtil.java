@@ -83,12 +83,13 @@ public class UploadUtil {
 		String requestFileName = patch.getOriginalFilename(); // 获取整个文件名
 		String suffix = StringUtil.substringAfterLast(requestFileName, "."); // 获取后缀名.jsp
 		String name = Md5Util.md5(patch.getInputStream());
-		String filepath = BASE_PATH + name + "." + suffix; // 存储的路径
-		File file = new File(filepath);
-
-		if (!file.exists()) {
-			file.mkdirs();
+		String savePath = BASE_PATH;
+		File savePathFile = new File(savePath);
+		if (!savePathFile.exists()) {
+			savePathFile.mkdirs();
 		}
+		String filepath = savePath + name + "." + suffix; // 存储的路径
+		File file = new File(filepath);
 		patch.transferTo(file);
 
 		return Config.getImagesDomain() + BASE_URI + name + "." + suffix;

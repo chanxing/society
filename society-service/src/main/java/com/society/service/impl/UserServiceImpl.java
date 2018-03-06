@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.updatePassword(userId, encryptPassword, salt);
 	}
 
+	@Override
+	public int countByClubId(Integer clubId) {
+		return userDao.countByClubId(clubId);
+	}
+
 }

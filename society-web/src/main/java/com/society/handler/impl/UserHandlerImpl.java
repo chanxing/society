@@ -1,11 +1,19 @@
 package com.society.handler.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.society.constant.ClubApplyStatusEnum;
+import com.society.constant.RoleTypeEnum;
 import com.society.handler.UserHandler;
+import com.society.model.ClubApply;
 import com.society.model.User;
+import com.society.service.ClubApplyService;
 import com.society.service.UserService;
+import com.society.vo.ClubApplyVO;
 import com.society.vo.UserDealVO;
 import com.society.vo.UserVO;
 
@@ -14,6 +22,8 @@ public class UserHandlerImpl implements UserHandler {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ClubApplyService clubApplyService;
 
 	@Override
 	public UserDealVO get(Integer id) {
@@ -42,6 +52,7 @@ public class UserHandlerImpl implements UserHandler {
 		vo.setStartYear(user.getStartYear());
 		vo.setUsername(user.getUsername());
 		vo.setWeixin(user.getWechat());
+		vo.setGrade(user.getGrade());
 		return vo;
 	}
 
@@ -50,8 +61,7 @@ public class UserHandlerImpl implements UserHandler {
 		if (null == user) {
 			return null;
 		}
-		// TODO:
-		boolean isMaster = true;
+		boolean isMaster = user.getRole() == RoleTypeEnum.ADMIN.getId();
 		return new UserVO(user.getId(), user.getUsername(), user.getImage(), isMaster);
 	}
 
@@ -59,6 +69,35 @@ public class UserHandlerImpl implements UserHandler {
 	public UserVO getInfo(Integer id) {
 		User user = userService.get(id);
 		return toUserVO(user);
+	}
+
+	@Override
+	public List<ClubApplyVO> listClubApplyUser(int clubId, int start, int size) {
+		List<ClubApply> list = clubApplyService.list(clubId, ClubApplyStatusEnum.APPLYING.getId(), start, size);
+		List<ClubApplyVO> vos = new ArrayList<>(list.size());
+		for (ClubApply apply : list) {
+			User user = userService.get(apply.getUserId());
+			if (null == user) {
+				user = new User();
+			}
+			ClubApplyVO vo = new ClubApplyVO();
+			vo.setActualName(user.getActualName());
+			vo.setDepartment(user.getDepartment());
+			vo.setGender(user.getGender());
+			vo.setId(apply.getId());
+			vo.setPhone(user.getPhone());
+			vo.setQq(user.getQq());
+			vo.setStartYear(user.getStartYear());
+			vo.setUserId(user.getId());
+			vo.setWeixin(user.getWechat());
+			vos.add(vo);
+		}
+		return vos;
+	}
+
+	@Override
+	public int countClubApplyUser(int clubId) {
+		return clubApplyService.count(clubId, ClubApplyStatusEnum.APPLYING.getId());
 	}
 
 }

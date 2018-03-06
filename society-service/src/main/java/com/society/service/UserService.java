@@ -81,4 +81,6 @@ public interface UserService {
 	 * @return
 	 */
 	boolean updatePassword(int userId, String password);
+
+	int countByClubId(Integer clubId);
 }

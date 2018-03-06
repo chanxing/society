@@ -1,6 +1,9 @@
 package com.society.handler;
 
+import java.util.List;
+
 import com.society.model.User;
+import com.society.vo.ClubApplyVO;
 import com.society.vo.UserDealVO;
 import com.society.vo.UserVO;
 
@@ -11,4 +14,8 @@ public interface UserHandler {
 	UserVO getInfo(Integer id);
 
 	UserVO toUserVO(User user);
+
+	List<ClubApplyVO> listClubApplyUser(int clubId, int start, int size);
+
+	int countClubApplyUser(int clubId);
 }

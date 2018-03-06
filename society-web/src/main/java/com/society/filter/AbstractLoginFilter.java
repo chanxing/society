@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartResolver;
 
 import com.society.model.User;
 import com.society.util.JsonUtil4CamelCase;
@@ -30,6 +32,11 @@ public abstract class AbstractLoginFilter implements Filter {
 
 	private static Logger logger = LoggerFactory.getLogger(AbstractLoginFilter.class);
 
+	private static final String HEADER_CONTENT_TYPE = "Content-type";
+
+	@Autowired
+	MultipartResolver multipartResolver;
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -40,7 +47,11 @@ public abstract class AbstractLoginFilter implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-
+		logger.info("clubId: " + req.getParameter("clubId"));
+		boolean isFileUpload = req.getHeader(HEADER_CONTENT_TYPE) != null && req.getHeader(HEADER_CONTENT_TYPE).startsWith("multipart/form-data");
+		if (isFileUpload) {
+			req = multipartResolver.resolveMultipart(req);
+		}
 		// 请求路径
 		String uri = req.getRequestURI();
 		if (!intercept(uri)) {

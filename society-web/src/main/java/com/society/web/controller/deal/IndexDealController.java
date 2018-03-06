@@ -45,7 +45,15 @@ public class IndexDealController extends BaseController {
 		return toRecordResult(user);
 	}
 
-	@RequestMapping(name = "/uploadUserImage", method = { RequestMethod.POST })
+	/**
+	 * uri:/deal/uploadUserImage.do
+	 * 
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/uploadUserImage", method = { RequestMethod.POST })
 	public String uploadUserImage(MultipartHttpServletRequest request, HttpSession session) throws Exception {
 		Integer userId = this.getUserId(session);
 		logger.info("uploadUserImage userId[{}]", new Object[] { userId });

@@ -2,6 +2,9 @@ package com.society.model;
 
 import java.util.Date;
 
+import com.society.constant.ClubLevelEnum;
+import com.society.constant.ClubTypeEnum;
+
 /**
  * 社团
  * 
@@ -17,12 +20,16 @@ public class Club {
 	private String logo;
 	/** 介绍 **/
 	private String introduction;
-	/** 社团类型 **/
+	/** 公告 **/
+	private String announcement;
+	/** 社团类型 {@link ClubTypeEnum} **/
 	private int type;
-	/** 审团等级 **/
+	/** 社团等级 {@link ClubLevelEnum} **/
 	private int level;
 	/** 创建人 **/
 	private int creater;
+	/** 创建日期 **/
+	private String section;
 	private Date posttime;
 	private Date lmodify;
 	private int del;
@@ -59,6 +66,14 @@ public class Club {
 		this.introduction = introduction;
 	}
 
+	public String getAnnouncement() {
+		return announcement;
+	}
+
+	public void setAnnouncement(String announcement) {
+		this.announcement = announcement;
+	}
+
 	public int getType() {
 		return type;
 	}
@@ -81,6 +96,14 @@ public class Club {
 
 	public void setCreater(int creater) {
 		this.creater = creater;
+	}
+
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
 	}
 
 	public Date getPosttime() {
@@ -109,8 +132,8 @@ public class Club {
 
 	@Override
 	public String toString() {
-		return "Club [id=" + id + ", name=" + name + ", logo=" + logo + ", introduction=" + introduction + ", type=" + type + ", level=" + level + ", creater=" + creater + ", posttime=" + posttime
-				+ ", lmodify=" + lmodify + ", del=" + del + "]";
+		return "Club [id=" + id + ", name=" + name + ", logo=" + logo + ", introduction=" + introduction + ", announcement=" + announcement + ", type=" + type + ", level=" + level + ", creater="
+				+ creater + ", section=" + section + ", posttime=" + posttime + ", lmodify=" + lmodify + ", del=" + del + "]";
 	}
 
 }

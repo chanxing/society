@@ -12,9 +12,15 @@ import com.society.model.Club;
  */
 public interface ClubService {
 
-	Integer add(String name, String logo, String introduction, int type, int level, int creater);
+	Integer add(String name, String logo, int type, int level, int creater);
 
 	Club get(Integer id);
 
-	List<Club> list(String keyword, Integer type, Integer level);
+	List<Club> list(String keyword, Integer type, Integer level, Integer sortType, int start, int size);
+
+	int count(String keyword, Integer type, Integer level);
+
+	boolean update(int clubId, String name, String logo, String introduction, String announcement, int type, int level);
+
+	boolean delete(int clubId);
 }

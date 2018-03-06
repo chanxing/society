@@ -29,4 +29,13 @@ public class WebMVCConfiguration extends WebMvcConfigurerAdapter {
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.favorPathExtension(false);
 	}
+
+	// @Bean
+	// public MultipartResolver multipartResolver() {
+	// CommonsMultipartResolver multipartResolver = new
+	// CommonsMultipartResolver();
+	// multipartResolver.setMaxUploadSize(5000000);
+	// multipartResolver.setDefaultEncoding("UTF-8");
+	// return multipartResolver;
+	// }
 }
