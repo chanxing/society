@@ -494,13 +494,17 @@ public class ClubDealController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listMember clubId[{}], userId[{}]", new Object[] { clubId, userId });
 		CheckUtil.isValidClubId(clubId);
+		Club club = clubService.get(clubId);
+		if (null == club) {
+			throw new ProjectException("社团不存在");
+		}
 		UserClubMap userMap = userClubMapService.get(userId, clubId);
 		Integer premitId = TableId.TEMP_ID;
 		if (null != userMap) {
 			premitId = userMap.getPremitId();
 		}
-		String premitName = ClubPremitEnum.getName(premitId);
-		ClubPremitVO result = new ClubPremitVO(premitId, premitName);
+		// String premitName = ClubPremitEnum.getName(premitId);
+		ClubPremitVO result = new ClubPremitVO(premitId, club.getName());
 		return toRecordResult(result);
 	}
 
