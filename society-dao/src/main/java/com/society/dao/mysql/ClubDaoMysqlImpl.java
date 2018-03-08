@@ -79,7 +79,7 @@ public class ClubDaoMysqlImpl implements ClubDao {
 		Map<String, Object> args = new HashMap<>();
 		args.put("start", start);
 		args.put("size", size);
-		String sql = "SELECT * FROM club WHERE 1=1 ";
+		String sql = "SELECT * FROM club WHERE del=0 ";
 		if (null != keyword) {
 			args.put("keyword", "%" + keyword + "%");
 			sql += " AND name LIKE :keyword ";

@@ -6,6 +6,7 @@
         <java.version>1.7</java.version>
         <self.version>0.0.1-SNAPSHOT</self.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jetty-version>9.2.9.v20150224</jetty-version>
     </properties>
 
 	<groupId>com.society</groupId>
@@ -79,6 +80,51 @@
                 <artifactId>commons-io</artifactId>
                 <version>2.1</version>
             </dependency>
+            <dependency>  
+            <groupId>org.eclipse.jetty</groupId>  
+            <artifactId>jetty-jsp</artifactId>  
+            <version>${jetty-version}</version>  
+        </dependency>  
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-webapp</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-server</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-servlet</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-util</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-security</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-http</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-io</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-xml</artifactId>
+		    <version>${jetty-version}</version>
+		</dependency>
     	</dependencies>
     </dependencyManagement>
 

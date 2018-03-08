@@ -17,11 +17,18 @@ import com.society.web.base.WebMVCConfiguration;
 @EnableAutoConfiguration
 @ComponentScan
 @ServletComponentScan
-@PropertySource("classpath:/application-${ENV}.properties")
+@PropertySource("classpath:application-${ENV}.properties")
 public class SocietyServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SocietyServletInitializer.class);
 	}
+
+	// @Bean
+	// public EmbeddedServletContainerFactory servletContainer() {
+	// JettyEmbeddedServletContainerFactory factory = new
+	// JettyEmbeddedServletContainerFactory();
+	// return factory;
+	// }
 }

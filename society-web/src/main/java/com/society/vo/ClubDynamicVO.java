@@ -19,6 +19,8 @@ public class ClubDynamicVO {
 	private String createDate;
 	/** 人数 **/
 	private Integer scale;
+	/** 等级 **/
+	private Integer level;
 
 	public Integer getClubId() {
 		return clubId;
@@ -68,9 +70,18 @@ public class ClubDynamicVO {
 		this.scale = scale;
 	}
 
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	@Override
 	public String toString() {
-		return "ClubDynamicVO [clubId=" + clubId + ", name=" + name + ", logo=" + logo + ", introduction=" + introduction + ", createDate=" + createDate + ", scale=" + scale + "]";
+		return "ClubDynamicVO [clubId=" + clubId + ", name=" + name + ", logo=" + logo + ", introduction=" + introduction + ", createDate=" + createDate + ", scale=" + scale + ", level=" + level
+				+ "]";
 	}
 
 }

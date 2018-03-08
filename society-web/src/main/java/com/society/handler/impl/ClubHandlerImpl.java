@@ -253,6 +253,7 @@ public class ClubHandlerImpl implements ClubHandler {
 			vo.setName(c.getName());
 			int scale = userClubMapService.countMember(c.getId(), null, null, null);
 			vo.setScale(scale);
+			vo.setLevel(c.getLevel());
 			vos.add(vo);
 		}
 		return vos;
