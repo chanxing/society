@@ -137,7 +137,7 @@ public class ClubApplyDealController extends BaseController {
 			throw new ProjectException("社团不存在");
 		}
 		UserClubMap map = userClubMapService.get(operator, clubId);
-		if (null == map) {
+		if (null != map) {
 			throw new ProjectException("已加入，不能重复申请");
 		}
 		ClubApply apply = clubApplyService.getLast(operator, clubId, ClubApplyStatusEnum.APPLYING.getId());
