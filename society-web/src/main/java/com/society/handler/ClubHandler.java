@@ -25,9 +25,9 @@ public interface ClubHandler {
 
 	boolean submitPosition(Integer positionId, Integer clubId, String name);
 
-	List<IdNameVO<Integer>> listDepartment(Integer clubId);
+	List<IdNameVO<String>> listDepartment(Integer clubId);
 
-	List<IdNameVO<Integer>> listPosition(Integer clubId);
+	List<IdNameVO<String>> listPosition(Integer clubId);
 
 	List<ClubMemberVO> listMember(int clubId, Integer departmentId, Integer positionId, String keyword, int start, int size);
 

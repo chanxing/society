@@ -58,8 +58,9 @@ public class SelectController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listDepartment clubId[{}], userId[{}]", new Object[] { clubId, userId });
 		CheckUtil.isValidClubId(clubId);
-		List<IdNameVO<Integer>> records = this.clubHandler.listDepartment(clubId);
-		records.add(0, new IdNameVO<Integer>(TableId.TEMP_ID, "全部部门"));
+		List<IdNameVO<String>> records = this.clubHandler.listDepartment(clubId);
+		records.add(0, new IdNameVO<String>(TableId.TEMP_ID + "", "未分配"));
+		records.add(0, new IdNameVO<String>("", "全部部门"));
 		return toListResult(TableId.TEMP_ID, records, records.size());
 	}
 
@@ -76,8 +77,9 @@ public class SelectController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listPosition clubId[{}], userId[{}]", new Object[] { clubId, userId });
 		CheckUtil.isValidClubId(clubId);
-		List<IdNameVO<Integer>> records = this.clubHandler.listPosition(clubId);
-		records.add(0, new IdNameVO<Integer>(TableId.TEMP_ID, "全部职位"));
+		List<IdNameVO<String>> records = this.clubHandler.listPosition(clubId);
+		records.add(0, new IdNameVO<String>(TableId.TEMP_ID + "", "未分配"));
+		records.add(0, new IdNameVO<String>("", "全部职位"));
 		return toListResult(TableId.TEMP_ID, records, records.size());
 	}
 }

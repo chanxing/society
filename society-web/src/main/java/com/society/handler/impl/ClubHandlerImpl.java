@@ -128,21 +128,21 @@ public class ClubHandlerImpl implements ClubHandler {
 	}
 
 	@Override
-	public List<IdNameVO<Integer>> listDepartment(Integer clubId) {
+	public List<IdNameVO<String>> listDepartment(Integer clubId) {
 		List<ClubDepartment> list = clubDepartmentService.list(clubId);
-		List<IdNameVO<Integer>> result = new ArrayList<>(list.size());
+		List<IdNameVO<String>> result = new ArrayList<>(list.size());
 		for (ClubDepartment c : list) {
-			result.add(new IdNameVO<Integer>(c.getId(), c.getName()));
+			result.add(new IdNameVO<String>(c.getId() + "", c.getName()));
 		}
 		return result;
 	}
 
 	@Override
-	public List<IdNameVO<Integer>> listPosition(Integer clubId) {
+	public List<IdNameVO<String>> listPosition(Integer clubId) {
 		List<ClubPosition> list = clubPositionService.list(clubId);
-		List<IdNameVO<Integer>> result = new ArrayList<>(list.size());
+		List<IdNameVO<String>> result = new ArrayList<>(list.size());
 		for (ClubPosition c : list) {
-			result.add(new IdNameVO<Integer>(c.getId(), c.getName()));
+			result.add(new IdNameVO<String>(c.getId() + "", c.getName()));
 		}
 		return result;
 	}

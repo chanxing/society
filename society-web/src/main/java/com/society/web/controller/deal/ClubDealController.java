@@ -229,7 +229,7 @@ public class ClubDealController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listDepartment clubId[{}], userId[{}]", new Object[] { clubId, userId });
 		CheckUtil.isValidClubId(clubId);
-		List<IdNameVO<Integer>> records = this.clubHandler.listDepartment(clubId);
+		List<IdNameVO<String>> records = this.clubHandler.listDepartment(clubId);
 		// records.add(0, new IdNameVO<Integer>(TableId.TEMP_ID, "全部部门"));
 		return toListResult(TableId.TEMP_ID, records, records.size());
 	}
@@ -247,7 +247,7 @@ public class ClubDealController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listPosition clubId[{}], userId[{}]", new Object[] { clubId, userId });
 		CheckUtil.isValidClubId(clubId);
-		List<IdNameVO<Integer>> records = this.clubHandler.listPosition(clubId);
+		List<IdNameVO<String>> records = this.clubHandler.listPosition(clubId);
 		// records.add(0, new IdNameVO<Integer>(TableId.TEMP_ID, "全部职位"));
 		return toListResult(TableId.TEMP_ID, records, records.size());
 	}
@@ -441,12 +441,6 @@ public class ClubDealController extends BaseController {
 		logger.info("listMember clubId[{}], clubDepartment[{}], position[{}], keyword[{}], operater[{}]", new Object[] { clubId, clubDepartment, position, keyword, operater });
 		CheckUtil.isValidPage(page);
 		CheckUtil.isValidClubId(clubId);
-		if (null != clubDepartment && clubDepartment == TableId.TEMP_ID) {
-			clubDepartment = null;
-		}
-		if (null != position && position == TableId.TEMP_ID) {
-			clubDepartment = null;
-		}
 		int size = PAGE_SIZE;
 		int start = (page.intValue() - 1) * size;
 		int count = userClubMapService.countMember(clubId, clubDepartment, position, keyword);
