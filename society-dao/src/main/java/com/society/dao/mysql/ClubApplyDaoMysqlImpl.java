@@ -46,7 +46,8 @@ public class ClubApplyDaoMysqlImpl implements ClubApplyDao {
 		}
 		if (StringUtils.isNotBlank(keyword)) {
 			args.put("keyword", "%" + keyword + "%");
-			sql += " AND actual_name LIKE :keyword ";
+			String userSql = " SELECT id FROM user WHERE del=0 AND club_apply.user_id=id AND actual_name LIKE :keyword ";
+			sql += " AND EXISTS (" + userSql + ")";
 		}
 		sql += " ORDER BY id LIMIT :start,:size";
 		return nameJdbcTemplate.query(sql, args, rowMapper);
@@ -66,7 +67,8 @@ public class ClubApplyDaoMysqlImpl implements ClubApplyDao {
 		}
 		if (StringUtils.isNotBlank(keyword)) {
 			args.put("keyword", "%" + keyword + "%");
-			sql += " AND actual_name LIKE :keyword ";
+			String userSql = " SELECT id FROM user WHERE del=0 AND club_apply.user_id=id AND actual_name LIKE :keyword ";
+			sql += " AND EXISTS (" + userSql + ")";
 		}
 		return nameJdbcTemplate.queryForObject(sql, args, Integer.class);
 	}
