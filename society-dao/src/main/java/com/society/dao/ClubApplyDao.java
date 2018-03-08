@@ -8,9 +8,9 @@ public interface ClubApplyDao {
 
 	boolean add(int userId, int clubId);
 
-	List<ClubApply> list(Integer clubId, Integer status, int start, int size);
+	List<ClubApply> list(Integer clubId, Integer status, String keyword, int start, int size);
 
-	int count(Integer clubId, Integer status);
+	int count(Integer clubId, Integer status, String keyword);
 
 	boolean pass(int userId, int clubId);
 

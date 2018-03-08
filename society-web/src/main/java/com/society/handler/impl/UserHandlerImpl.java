@@ -72,8 +72,8 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public List<ClubApplyVO> listClubApplyUser(int clubId, int start, int size) {
-		List<ClubApply> list = clubApplyService.list(clubId, ClubApplyStatusEnum.APPLYING.getId(), start, size);
+	public List<ClubApplyVO> listClubApplyUser(int clubId, String keyword, int start, int size) {
+		List<ClubApply> list = clubApplyService.list(clubId, ClubApplyStatusEnum.APPLYING.getId(), keyword, start, size);
 		List<ClubApplyVO> vos = new ArrayList<>(list.size());
 		for (ClubApply apply : list) {
 			User user = userService.get(apply.getUserId());
@@ -96,8 +96,8 @@ public class UserHandlerImpl implements UserHandler {
 	}
 
 	@Override
-	public int countClubApplyUser(int clubId) {
-		return clubApplyService.count(clubId, ClubApplyStatusEnum.APPLYING.getId());
+	public int countClubApplyUser(int clubId, String keyword) {
+		return clubApplyService.count(clubId, ClubApplyStatusEnum.APPLYING.getId(), keyword);
 	}
 
 }

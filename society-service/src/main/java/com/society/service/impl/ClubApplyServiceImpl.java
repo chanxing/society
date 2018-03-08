@@ -26,13 +26,13 @@ public class ClubApplyServiceImpl implements ClubApplyService {
 	}
 
 	@Override
-	public List<ClubApply> list(Integer clubId, Integer status, int start, int size) {
-		return clubApplyDao.list(clubId, status, start, size);
+	public List<ClubApply> list(Integer clubId, Integer status, String keyword, int start, int size) {
+		return clubApplyDao.list(clubId, status, keyword, start, size);
 	}
 
 	@Override
-	public int count(Integer clubId, Integer status) {
-		return clubApplyDao.count(clubId, status);
+	public int count(Integer clubId, Integer status, String keyword) {
+		return clubApplyDao.count(clubId, status, keyword);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,7 +31,7 @@ public class ClubApplyDaoMysqlImpl implements ClubApplyDao {
 	}
 
 	@Override
-	public List<ClubApply> list(Integer clubId, Integer status, int start, int size) {
+	public List<ClubApply> list(Integer clubId, Integer status, String keyword, int start, int size) {
 		Map<String, Object> args = new HashMap<>();
 		args.put("start", start);
 		args.put("size", size);
@@ -43,12 +44,16 @@ public class ClubApplyDaoMysqlImpl implements ClubApplyDao {
 			args.put("status", status);
 			sql += " AND status=:status ";
 		}
+		if (StringUtils.isNotBlank(keyword)) {
+			args.put("keyword", "%" + keyword + "%");
+			sql += " AND actual_name LIKE :keyword ";
+		}
 		sql += " ORDER BY id LIMIT :start,:size";
 		return nameJdbcTemplate.query(sql, args, rowMapper);
 	}
 
 	@Override
-	public int count(Integer clubId, Integer status) {
+	public int count(Integer clubId, Integer status, String keyword) {
 		Map<String, Object> args = new HashMap<>();
 		String sql = "SELECT COUNT(1) FROM club_apply WHERE del=0 ";
 		if (null != clubId) {
@@ -58,6 +63,10 @@ public class ClubApplyDaoMysqlImpl implements ClubApplyDao {
 		if (null != status) {
 			args.put("status", status);
 			sql += " AND status=:status ";
+		}
+		if (StringUtils.isNotBlank(keyword)) {
+			args.put("keyword", "%" + keyword + "%");
+			sql += " AND actual_name LIKE :keyword ";
 		}
 		return nameJdbcTemplate.queryForObject(sql, args, Integer.class);
 	}

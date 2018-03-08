@@ -53,15 +53,15 @@ public class ClubApplyDealController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("list")
-	public String list(Integer clubId, Integer page, HttpSession session) {
+	public String list(Integer clubId, Integer page, String keyword, HttpSession session) {
 		Integer userId = this.getUserId(session);
-		logger.info("list userId[{}], clubId[{}]", new Object[] { userId, clubId });
+		logger.info("list userId[{}], clubId[{}], keyword[{}]", new Object[] { userId, clubId, keyword });
 		CheckUtil.isValidClubId(clubId);
 		CheckUtil.isValidPage(page);
 		int size = PAGE_SIZE;
 		int start = (page.intValue() - 1) * size;
-		int count = userHandler.countClubApplyUser(clubId);
-		List<ClubApplyVO> records = userHandler.listClubApplyUser(clubId, start, size);
+		int count = userHandler.countClubApplyUser(clubId, keyword);
+		List<ClubApplyVO> records = userHandler.listClubApplyUser(clubId, keyword, start, size);
 		return toListResult(TableId.TEMP_ID, records, count, page, size);
 	}
 

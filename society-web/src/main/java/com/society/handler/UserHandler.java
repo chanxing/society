@@ -15,7 +15,7 @@ public interface UserHandler {
 
 	UserVO toUserVO(User user);
 
-	List<ClubApplyVO> listClubApplyUser(int clubId, int start, int size);
+	List<ClubApplyVO> listClubApplyUser(int clubId, String keyword, int start, int size);
 
-	int countClubApplyUser(int clubId);
+	int countClubApplyUser(int clubId, String keyword);
 }
