@@ -79,7 +79,7 @@ public class ClubDealController extends BaseController {
 		}
 		int size = PAGE_SIZE;
 		int start = (page.intValue() - 1) * size;
-		int count = userClubMapService.count(userId);
+		int count = clubHandler.count(userId);
 		List<ClubListVO> records = clubHandler.list(userId, start, size);
 		return toListResult(TableId.TEMP_ID, records, count, page, size);
 	}

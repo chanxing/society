@@ -58,6 +58,23 @@ public class ClubHandlerImpl implements ClubHandler {
 
 	@Override
 	public List<ClubListVO> list(Integer userId, int start, int size) {
+		if (null == userId) {
+			List<Club> clubs = clubService.list(null, null, null, null, start, size);
+			List<ClubListVO> clubVos = new ArrayList<>(clubs.size());
+			for (Club c : clubs) {
+				ClubListVO vo = new ClubListVO();
+				vo.setClubId(c.getId());
+				vo.setIntroduction(c.getIntroduction());
+				vo.setLogo(c.getLogo());
+				vo.setName(c.getName());
+				Integer premit = ClubPremitEnum.ADMIN.getId();
+				String premitName = ClubPremitEnum.getName(premit);
+				vo.setPremit(premit);
+				vo.setPremitName(premitName);
+				clubVos.add(vo);
+			}
+			return clubVos;
+		}
 		List<UserClubMap> list = userClubMapService.list(userId, start, size);
 		List<ClubListVO> vos = new ArrayList<>(list.size());
 		for (UserClubMap map : list) {
@@ -77,6 +94,14 @@ public class ClubHandlerImpl implements ClubHandler {
 			vos.add(vo);
 		}
 		return vos;
+	}
+
+	@Override
+	public int count(Integer userId) {
+		if (null == userId) {
+			return this.clubService.count(null, null, null);
+		}
+		return this.userClubMapService.count(userId);
 	}
 
 	@Override

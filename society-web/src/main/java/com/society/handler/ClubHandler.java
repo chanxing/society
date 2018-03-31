@@ -17,6 +17,8 @@ public interface ClubHandler {
 
 	List<ClubListVO> list(Integer userId, int start, int size);
 
+	int count(Integer userId);
+
 	ClubVO get(Integer clubId);
 
 	boolean submit(ClubFO fo, int userId);
