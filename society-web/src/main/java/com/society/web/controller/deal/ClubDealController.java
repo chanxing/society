@@ -71,6 +71,12 @@ public class ClubDealController extends BaseController {
 		Integer userId = this.getUserId(session);
 		logger.info("listMyClub page[{}], userId[{}]", new Object[] { page, userId });
 		CheckUtil.isValidPage(page);
+		User user = this.userService.get(userId);
+		boolean admin = this.hasClubAdminRight(user, null);
+		if (admin == true) {
+			logger.info("listMyClub admin user[{}]", new Object[] { userId });
+			userId = null;
+		}
 		int size = PAGE_SIZE;
 		int start = (page.intValue() - 1) * size;
 		int count = userClubMapService.count(userId);
@@ -139,16 +145,19 @@ public class ClubDealController extends BaseController {
 			throw new ProjectException("社团不存在");
 		}
 		UserClubMap userClubMap = userClubMapService.get(userId, clubId);
-		boolean canoperate = false;
-		if (null != userClubMap) {
-			canoperate = ClubPremitEnum.ADMIN.getId() == userClubMap.getPremitId();
-		}
+		User user = userService.get(userId);
+		boolean canoperate = this.hasClubAdminRight(user, userClubMap);
+		// if (null != userClubMap) {
+		// canoperate = ClubPremitEnum.ADMIN.getId() ==
+		// userClubMap.getPremitId();
+		// }
+		// if (false == canoperate) {
+		// User user = userService.get(userId);
+		// canoperate = null != user && user.getRole() ==
+		// RoleTypeEnum.ADMIN.getId();
+		// }
 		if (false == canoperate) {
-			User user = userService.get(userId);
-			canoperate = null != user && user.getRole() == RoleTypeEnum.ADMIN.getId();
-		}
-		if (false == canoperate) {
-			throw new ProjectException("没有权限删除");
+			throw new ProjectException("没有权限解散");
 		}
 		boolean result = clubService.delete(clubId);
 		return toBooleanResult(result);
@@ -376,19 +385,39 @@ public class ClubDealController extends BaseController {
 		CheckUtil.isValidPremitId(premit);
 		CheckUtil.isValidClubId(clubId);
 		CheckUtil.isValidUserId(userId);
-		UserClubMap userMap = userClubMapService.get(operater, clubId);
-		if (userMap.getPremitId() != ClubPremitEnum.ADMIN.getId()) {
+		UserClubMap clubUser = userClubMapService.get(userId, clubId);
+		if (null == clubUser) {
+			throw new ProjectException("非社团成员");
+		}
+		// 操作人权限
+		UserClubMap operaterMap = userClubMapService.get(operater, clubId);
+		User operaterUser = this.userService.get(operater);
+		boolean admin = this.hasClubAdminRight(operaterUser, operaterMap);
+		if (admin == false) {
 			throw new ProjectException("操作权限不足");
 		}
-		if (operater.intValue() == userId.intValue() && premit.intValue() != ClubPremitEnum.ADMIN.getId()) {
-			// 更改自己的权限
+		boolean clubAdmin = null != operaterMap && operaterMap.getPremitId() == ClubPremitEnum.ADMIN.getId();
+		// 用户权限不变
+		if (clubUser.getPremitId() == premit.intValue()) {
+			return toBooleanResult(true);
+		}
+		if (premit.intValue() == ClubPremitEnum.ADMIN.getId()) {
+			// 其他-->管理员
+			if (clubAdmin == false) {
+				// 操作人非最高管理员
+				throw new ProjectException("没有权限赋予最高管理员角色");
+			}
+		}
+		if (clubUser.getPremitId() == ClubPremitEnum.ADMIN.getId()) {
+			// 最高管理员-->其他
 			int count = userClubMapService.countPremit(clubId, ClubPremitEnum.ADMIN.getId());
 			if (count <= 1) {
 				throw new ProjectException("请先移交管理权限");
 			}
 		}
 		boolean result = userClubMapService.updatePremit(userId, clubId, premit);
-		if (result == true && operater.intValue() != userId.intValue() && premit.intValue() == ClubPremitEnum.ADMIN.getId()) {
+		if (true == result && true == clubAdmin && operater.intValue() != userId.intValue() && premit.intValue() == ClubPremitEnum.ADMIN.getId()) {
+			// 操作员是最高管理员，赋予其他人最高管理员
 			userClubMapService.updatePremit(operater, clubId, ClubPremitEnum.GENERAL_MANAGER.getId());
 		}
 		return toBooleanResult(result);
@@ -410,10 +439,13 @@ public class ClubDealController extends BaseController {
 		CheckUtil.isValidClubId(clubId);
 		CheckUtil.isValidUserId(userId);
 		UserClubMap userMap = userClubMapService.get(operater, clubId);
-		if (userMap.getPremitId() != ClubPremitEnum.ADMIN.getId()) {
+		User operaterUser = this.userService.get(operater);
+		boolean admin = this.hasClubAdminRight(operaterUser, userMap);
+		if (admin == false) {
 			throw new ProjectException("操作权限不足");
 		}
-		if (operater.intValue() == userId.intValue()) {
+		UserClubMap clubUser = this.userClubMapService.get(userId, clubId);
+		if (null != clubUser && clubUser.getPremitId() == ClubPremitEnum.ADMIN.getId()) {
 			int count = userClubMapService.countPremit(clubId, ClubPremitEnum.ADMIN.getId());
 			if (count <= 1) {
 				throw new ProjectException("请先移交管理权限");
@@ -497,9 +529,34 @@ public class ClubDealController extends BaseController {
 		if (null != userMap) {
 			premitId = userMap.getPremitId();
 		}
+		User user = this.userService.get(userId);
+		boolean admin = this.hasClubAdminRight(user, userMap);
+		if (admin == true) {
+			premitId = ClubPremitEnum.ADMIN.getId();
+		}
 		// String premitName = ClubPremitEnum.getName(premitId);
 		ClubPremitVO result = new ClubPremitVO(premitId, club.getName());
 		return toRecordResult(result);
 	}
 
+	/**
+	 * 是否拥有社团最高权限
+	 * 
+	 * @param user
+	 * @param userMap
+	 * @return
+	 */
+	private boolean hasClubAdminRight(User user, UserClubMap userMap) {
+		if (null != user) {
+			if (user.getRole() == RoleTypeEnum.ADMIN.getId()) {
+				return true;
+			}
+		}
+		if (null != userMap) {
+			if (userMap.getPremitId() == ClubPremitEnum.ADMIN.getId()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
