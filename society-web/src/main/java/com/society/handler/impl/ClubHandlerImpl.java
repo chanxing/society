@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.society.constant.ClubPremitEnum;
+import com.society.constant.RoleTypeEnum;
 import com.society.fo.ClubActivityFO;
 import com.society.fo.ClubFO;
 import com.society.handler.ClubHandler;
@@ -299,6 +300,10 @@ public class ClubHandlerImpl implements ClubHandler {
 			UserClubMap map = userClubMapService.get(userId, clubId);
 			if (null != map) {
 				isMember = true;
+			} else {
+				// 系统管理员
+				User user = userService.get(userId);
+				isMember = null != user && user.getRole() == RoleTypeEnum.ADMIN.getId();
 			}
 		}
 		vo.setIsMember(isMember);
