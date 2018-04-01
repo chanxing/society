@@ -313,7 +313,7 @@ public class ClubHandlerImpl implements ClubHandler {
 		vo.setType(club.getType());
 		if (isMember == true) {
 			List<MemberVO> memberList = new ArrayList<>();
-			List<UserClubMap> list = userClubMapService.listMember(clubId, null, null, null, 0, 10);
+			List<UserClubMap> list = userClubMapService.listMember(clubId, null, null, null, 0, Integer.MAX_VALUE);
 			for (UserClubMap map : list) {
 				User user = userService.get(map.getUserId());
 				if (null == user) {
@@ -323,13 +323,13 @@ public class ClubHandlerImpl implements ClubHandler {
 			}
 			vo.setMemberList(memberList);
 		}
-		List<ClubActivity> clubActivityList = clubActivityService.list(clubId, null, null, null, 0, 10);
+		List<ClubActivity> clubActivityList = clubActivityService.list(clubId, null, null, null, 0, Integer.MAX_VALUE);
 		List<ClubActivityListVO> activityList = new ArrayList<>();
 		for (ClubActivity c : clubActivityList) {
 			activityList.add(new ClubActivityListVO(c.getId(), c.getType(), c.getTitle(), c.getStartDate(), c.getEndDate(), c.getPlace(), c.getPoster(), c.getDescription()));
 		}
 		vo.setActivityList(activityList);
-		List<ClubPhoto> list = clubPhotoService.list(clubId, 0, 10);
+		List<ClubPhoto> list = clubPhotoService.list(clubId, 0, Integer.MAX_VALUE);
 		List<ClubPhotoVO> albumList = new ArrayList<>();
 		for (ClubPhoto c : list) {
 			albumList.add(new ClubPhotoVO(c.getId(), c.getUrl()));
